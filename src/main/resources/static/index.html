@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+<h1>Baba's quote</h1>
+<ul id="quote-list"></ul>
+<div id="error-message" class="error"></div>
+
+<script>
+    async function fetchQuotes() {
+        const errorMessage = document.getElementById('error-message');
+        try {
+            const response = await fetch('/quotes/all');
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch quotes: ' + response.statusText);
+            }
+
+            const quotes = await response.json();
+            const quoteList = document.getElementById('quote-list');
+            quoteList.innerHTML = '';
+
+            quotes.forEach(quote => {
+                const li = document.createElement('li');
+                li.textContent = `${quote.quote} (${quote.email})`;
+                quoteList.appendChild(li);
+            });
+            errorMessage.textContent = ''; // Clear error message
+        } catch (error) {
+            console.error('Error fetching quotes:', error);
+            errorMessage.textContent = error.message;
+        }
+    }
+
+    window.onload = fetchQuotes;
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  mysql_db:
+    image: mysql:8.0-oracle
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: springbootdb
+      MYSQL_USER: springuser
+      MYSQL_PASSWORD: springpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    networks:
+      - springboot-network
+  qod:
+    image: qod:v3
+    container_name: qod
+networks:
+  springboot-network:
+    driver: bridge
