@@ -17,6 +17,12 @@ services:
   qod:
     image: qod:v3
     container_name: qod
+    networks:
+      - springboot-network
+    depends_on:
+      - mysql_db
+    ports:
+      - "8080:8080"
 networks:
   springboot-network:
     driver: bridge

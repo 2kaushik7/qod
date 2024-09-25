@@ -10,11 +10,14 @@ import org.sai.qod.model.Quote;
 import org.sai.qod.repository.QuoteRepository;
 import org.sai.qod.service.QuoteService;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+@ActiveProfiles("test")
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class QuoteServiceTest {
