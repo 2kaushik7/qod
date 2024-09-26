@@ -89,13 +89,4 @@
 
         </plugins>
     </build>
-    <profiles>
-        <!-- Profile for test execution -->
-        <profile>
-            <id>test</id>  <!-- Profile ID is 'test', it will be used for running tests -->
-            <properties>
-                <spring.profiles.active>test</spring.profiles.active>
-            </properties>
-        </profile>
-    </profiles>
 </project>
