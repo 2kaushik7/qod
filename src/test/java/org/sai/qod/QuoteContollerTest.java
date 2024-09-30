@@ -15,6 +15,7 @@ import org.springframework.util.Assert;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -40,6 +41,21 @@ public class QuoteContollerTest {
         assertEquals(mockQuotes.get(1).getId(),result.get(1).getId());
         assertEquals(mockQuotes.get(0).getQuote(),result.get(0).getQuote());
         assertEquals(mockQuotes.get(1).getQuote(),result.get(1).getQuote());
+    }
+
+    @Test
+    public void testGetQuoteById(){
+        Quote quote = null;
+        Quote mockQuote = new Quote(1L,"Test quote","saibaba1@gmail.com");
+        Mockito.when(quoteService.getQuoteById(1L)).thenReturn(Optional.of(mockQuote));
+
+        //ACT
+        Optional<Quote> quoteOptional =  qodController.getQuote(1L);
+        if (quoteOptional.isPresent()) {quote = quoteOptional.get();}
+        assertEquals(mockQuote.getQuote(),quote.getQuote());
+        assertEquals(mockQuote.getId(),quote.getId());
+        assertEquals(mockQuote.getEmail(),quote.getEmail());
+
     }
 
 }

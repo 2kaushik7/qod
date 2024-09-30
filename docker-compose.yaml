@@ -1,8 +1,8 @@
 version: '3.8'
 services:
-  mysql_db:
+  mysql_db_docker_compose:
     image: mysql:8.0-oracle
-    container_name: mysql_db
+    container_name: mysql_db_docker_compose
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: springbootdb
@@ -15,12 +15,13 @@ services:
     networks:
       - springboot-network
   qod:
-    image: qod:v3
+    #image: qod:v3
+    build: .
     container_name: qod
     networks:
       - springboot-network
     depends_on:
-      - mysql_db
+      - mysql_db_docker_compose
     ports:
       - "8080:8080"
 networks:
