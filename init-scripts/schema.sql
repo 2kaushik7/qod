@@ -1,3 +1,6 @@
+GRANT ALL PRIVILEGES ON springbootdb.* TO 'root'@'%';
+FLUSH PRIVILEGES;
+
 CREATE DATABASE IF NOT EXISTS springbootdb;
 
 USE springbootdb;
