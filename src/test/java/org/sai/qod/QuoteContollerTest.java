@@ -58,4 +58,16 @@ public class QuoteContollerTest {
 
     }
 
+    @Test
+    public void testInsertQuote(){
+        Quote mockQuote = new Quote(1L,"Test quote","saibaba1@gmail.com");
+        Mockito.when(quoteService.saveQuote(mockQuote)).thenReturn(mockQuote);
+
+        //ACT
+        Quote result = qodController.insertQuote(mockQuote);
+        assertEquals(mockQuote.getId(),result.getId());
+        assertEquals(mockQuote.getEmail(),result.getEmail());
+        assertEquals(mockQuote.getQuote(),result.getQuote());
+    }
+
 }
