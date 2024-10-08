@@ -70,4 +70,21 @@ public class QuoteContollerTest {
         assertEquals(mockQuote.getQuote(),result.getQuote());
     }
 
+    @Test
+    public void testUpdateQuote(){
+        Quote mockQuote = new Quote(1L,"Test quote","saibaba1@gmail.com");
+        Mockito.when(quoteService.updateQuote(1L,new Quote(1L,"Test quote","saibaba1@gmail.com"))).thenReturn(mockQuote);
+        //ACT
+        Quote result = qodController.updateQuote(mockQuote);
+        assertEquals(mockQuote.getQuote(),result.getQuote()); //ACT
+    }
+
+    @Test
+    public void testDeleteQuote(){
+        Quote mockQuote = new Quote(1L,"Test quote","saibaba1@gmail.com");
+        //ACT
+        qodController.deleteQuote(mockQuote);
+        Mockito.verify(quoteService,Mockito.times(1)).deleteQuote(1L);
+    }
+
 }

@@ -35,7 +35,7 @@ public class QuoteService {
         quoteRepository.deleteById(id);
     }
 
-    public Quote updateQuote(long l, Quote quote) {
+    public Quote updateQuote(Long l, Quote quote) {
         Quote quoteExisting = quoteRepository.findById(l).orElseThrow(() -> new NullPointerException("Quote not found with id: " + l));
         quoteExisting.setQuote(quote.getQuote());
         quoteExisting.setEmail(quote.getEmail());

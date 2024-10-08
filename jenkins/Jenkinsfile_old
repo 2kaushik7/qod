@@ -1,0 +1,108 @@
+ pipeline{
+    agent any
+    tools{
+        jdk 'OracleJDK17'
+    }
+    environment{
+        DOCKER_IMAGE_NAME = "qod:v4"
+        DOCKER_CONTAINER_NAME = "qodcontainer"
+        DOCKER_REGISTRY = "surins"
+    }
+     stages {
+        stage('Fetch code'){
+            steps {
+                git branch: 'main', url: 'https://github.com/2kaushik7/qod'
+            }
+        }
+        stage('clean'){
+            steps {
+                sh 'echo $PATH'
+                sh 'mvn clean'
+            }
+        }
+        stage('Build'){
+            steps {
+                sh 'mvn clean install -DskipTests'
+            }
+        }
+        /*stage('Test'){
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('Build docker images'){
+            steps {
+                echo "Building image..."
+                sh """
+                docker build -t ${DOCKER_IMAGE_NAME} .
+                """
+            }
+        }*/
+        stage('Cleanup'){
+            steps{
+                echo "Cleaning up containers"
+                sh '''
+                    #stop all running containers
+                    if [ "$(docker ps -a -q)" ]; then
+                      echo "Stopping all containers"
+                      docker stop $(docker ps -a -q)
+                    else
+                      echo "No containers to stop."
+                    fi
+
+                    #remove all containers
+                    if [ "$(docker ps -a -q)" ];then
+                      echo "Removing all containers"
+                      docker rm $(docker ps -a -q)
+                    else
+                      echo "No containers to remove"
+                    fi
+
+                    #kill network
+                    if [ "$(docker network inspect app-network)" ]; then
+                      echo "deleting network.."
+                      docker network rm app-network
+                    else
+                      echo "No network to remove."
+                    fi
+                '''
+            }
+        }
+        stage('Run MySQL Container') {
+            steps {
+                script {
+                    // Start MySQL container
+                    sh '''
+
+                    docker network create app-network
+                    docker run --name mysql_db --network app-network \
+                    -e MYSQL_ROOT_PASSWORD=rootpassword \
+                    -e MYSQL_DATABASE=springbootdb \
+                    -e MYSQL_USER=springuser \
+                    -e MYSQL_PASSWORD=springpassword \
+                    -v $(pwd)/init-scripts:/docker-entrypoint-initdb.d \
+                    -p 3306:3306 \
+                    -d mysql:8.0-oracle
+                    '''
+
+                    // Wait for MySQL to initialize
+                    sh 'sleep 30'
+                }
+            }
+        }
+        stage('Deploy'){
+            steps{
+                // Run the new Docker container
+                echo "Deploying new container..."
+                sh """
+                docker run --name ${DOCKER_CONTAINER_NAME} --network app-network\
+                -e SPRING_DATASOURCE_URL=jdbc:mysql://mysql_db:3306/springbootdb \
+                -e SPRING_DATASOURCE_USERNAME=root \
+                -e SPRING_DATASOURCE_PASSWORD=rootpassword \
+                -e SPRING_JPA_HIBERNATE_DDL_AUTO=update \
+                -dp 8567:8080 ${DOCKER_IMAGE_NAME} \
+                """
+            }
+        }
+     }
+ }

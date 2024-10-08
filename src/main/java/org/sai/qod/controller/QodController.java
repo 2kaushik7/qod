@@ -1,6 +1,5 @@
 package org.sai.qod.controller;
 
-import jakarta.websocket.server.PathParam;
 import org.sai.qod.model.Quote;
 import org.sai.qod.service.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +27,12 @@ public class QodController {
     public Quote insertQuote(@RequestBody Quote quote){
         return quoteService.saveQuote(quote);
     }
-    @PutMapping("/quote")
-    public void updateQuote(){
-        System.out.println("OM Sainathaya Namaha update");
+    @PutMapping
+    public Quote updateQuote(@RequestBody Quote quote){
+        return quoteService.updateQuote(quote.getId(),quote);
     }
-    @DeleteMapping ("/quote")
-    public void deleteQuote(){
-        System.out.println("OM Sainathaya Namaha delete");
+    @DeleteMapping
+    public void deleteQuote(@RequestBody Quote quote){
+        quoteService.deleteQuote(quote.getId());
     }
 }
