@@ -8,7 +8,7 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>/Applications/apache-tomcat-9.0.95/logs/QOD.log</file> <!-- Adjust path as needed -->
+        <!--<file>/Applications/apache-tomcat-9.0.95/logs/QOD.log</file> Adjust path as needed  -->
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{15} - %msg%n</pattern>
         </encoder>
