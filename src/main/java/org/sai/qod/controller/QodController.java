@@ -3,6 +3,7 @@ package org.sai.qod.controller;
 import org.sai.qod.model.Quote;
 import org.sai.qod.service.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,5 +35,11 @@ public class QodController {
     @DeleteMapping
     public void deleteQuote(@RequestBody Quote quote){
         quoteService.deleteQuote(quote.getId());
+    }
+
+    @GetMapping("/refreshQuote")
+    public ResponseEntity<String> getQuoteAtMidnight(){
+        String quote =  quoteService.getQuoteAtMidnight();
+        return ResponseEntity.ok(quote);
     }
 }

@@ -41,4 +41,25 @@ public class QuoteService {
         quoteExisting.setEmail(quote.getEmail());
         return quoteRepository.save(quoteExisting);
     }
+
+    public String getQuoteAtMidnight(){
+        Optional<Quote> quote;
+        Long quoteExisting = quoteRepository.getCurrentQuote();
+        Long newQuoteId = quoteExisting + 1;
+        quote =  quoteRepository.findById(newQuoteId);
+        if(quote.isPresent()){
+            return saveNewQuoteAndReturnQuote(quote.get());
+        }else {
+            quote = quoteRepository.findById(1L);
+            if(quote.isPresent()){
+                return saveNewQuoteAndReturnQuote(quote.get());
+            }
+            return "Baba is eternal";
+        }
+    }
+
+    public String saveNewQuoteAndReturnQuote(Quote newQuote) {
+            quoteRepository.insertQuoteIntoCurrentQuote(newQuote.getId(),newQuote.getQuote(),newQuote.getEmail());
+            return newQuote.getQuote();
+    }
 }

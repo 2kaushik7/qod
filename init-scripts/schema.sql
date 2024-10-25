@@ -9,3 +9,9 @@ CREATE TABLE IF NOT EXISTS quote (
                       quote VARCHAR(255),
                       email VARCHAR(255)
 );
+
+CREATE TABLE IF NOT EXISTS current_quote (
+                                     id INT PRIMARY KEY,
+                                     quote VARCHAR(255),
+                                     email VARCHAR(255)
+);
