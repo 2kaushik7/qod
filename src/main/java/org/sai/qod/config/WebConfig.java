@@ -14,7 +14,7 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/quotes/**")
-                        .allowedOrigins("http://localhost:5173")  // Vite frontend URL
+                        .allowedOrigins("http://54.90.158.87:5173")  // Vite frontend URL
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("*")
                         .allowCredentials(true);
