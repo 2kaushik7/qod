@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/quotes")
-@CrossOrigin(origins = "http://")
+@CrossOrigin(origins = "*")
 public class QodController {
 
     @Autowired
