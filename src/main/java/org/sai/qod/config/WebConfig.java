@@ -16,8 +16,7 @@ public class WebConfig {
                 registry.addMapping("/quotes/**")
                         .allowedOrigins("*")  // Vite frontend URL
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .allowedHeaders("*")
-                        .allowCredentials(true);
+                        .allowedHeaders("*");
             }
         };
     }
