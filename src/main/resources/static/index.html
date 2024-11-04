@@ -22,7 +22,7 @@ QUOTE OF THE DAY
             const hostname = window.location.hostname;
             //const hostname = 'localhost';
             const port = '8080';
-            const apiUrl = `http://${hostname}:${port}/quotes/refreshQuote`;
+            const apiUrl = `http://${hostname}/quotes/refreshQuote`;
             const response = await fetch(apiUrl);
             if (response.ok) {
                 const message = await response.text();
