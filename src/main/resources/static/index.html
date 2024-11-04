@@ -21,7 +21,7 @@ QUOTE OF THE DAY
         try {
             const hostname = window.location.hostname;
             const port = '8080';
-            const apiUrl = `http://${hostname}:${port}/quotes/refreshQuote`;
+            const apiUrl = `http://${hostname}/quotes/refreshQuote`;
             const response = await fetch(apiUrl);
             if (response.ok) {
                 const message = await response.text();
