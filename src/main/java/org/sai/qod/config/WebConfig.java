@@ -14,7 +14,7 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/quotes/**")
-                        .allowedOrigins("*")  // Vite frontend URL
+                        .allowedOrigins("https://quoteoftheday.ryu3dsst.co.uk")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("*");
             }
