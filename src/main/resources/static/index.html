@@ -19,7 +19,7 @@ QUOTE OF THE DAY
 <script>
     async function fetchMessage() {
         try {
-            const response = await fetch('http://localhost:8080/quotes/refreshQuote');
+            const response = await fetch('http://54.167.13.24:8080/quotes/refreshQuote');
             if (response.ok) {
                 const message = await response.text();
                 document.getElementById('message').textContent = message;
