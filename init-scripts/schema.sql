@@ -1,9 +1,10 @@
-GRANT ALL PRIVILEGES ON springbootdb.* TO 'root'@'%';
+CREATE DATABASE IF NOT EXISTS springbootdb;
+CREATE USER 'qod'@'%' IDENTIFIED BY 'qodpassword';
+GRANT ALL PRIVILEGES ON springbootdb.* TO 'qod'@'%';
 FLUSH PRIVILEGES;
 
-CREATE DATABASE IF NOT EXISTS springbootdb;
-
 USE springbootdb;
+
 CREATE TABLE IF NOT EXISTS quote (
                       id INT AUTO_INCREMENT PRIMARY KEY,
                       quote VARCHAR(255),
