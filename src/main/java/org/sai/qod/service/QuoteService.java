@@ -1,65 +1,26 @@
 package org.sai.qod.service;
 
-import org.sai.qod.model.Quote;
-import org.sai.qod.repository.QuoteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
-import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class QuoteService {
 
-    @Autowired
-    private QuoteRepository quoteRepository;
+    @Value("${quotes.filePath}")
+    String quotesFilePath;
 
-    // Method to get all quotes
-    public List<Quote> getAllQuotes() {
-        return quoteRepository.findAll();
-    }
 
-    // Method to get a quote by ID
-    public Optional<Quote> getQuoteById(Long id) {
-        return quoteRepository.findById(id);
-    }
-
-    // Method to create or update a quote
-    public Quote saveQuote(Quote quote) {
-        return quoteRepository.save(quote);
-    }
-
-    // Method to delete a quote by ID
-    public void deleteQuote(Long id) {
-        Quote quoteExisting = quoteRepository.findById(id).orElseThrow(() -> new NullPointerException("Quote not found with id: " + id));
-        quoteRepository.deleteById(id);
-    }
-
-    public Quote updateQuote(Long l, Quote quote) {
-        Quote quoteExisting = quoteRepository.findById(l).orElseThrow(() -> new NullPointerException("Quote not found with id: " + l));
-        quoteExisting.setQuote(quote.getQuote());
-        quoteExisting.setEmail(quote.getEmail());
-        return quoteRepository.save(quoteExisting);
-    }
-
-    public String getQuoteAtMidnight(){
-        Optional<Quote> quote;
-        Long quoteExisting = quoteRepository.getCurrentQuote();
-        Long newQuoteId = quoteExisting + 1;
-        quote =  quoteRepository.findById(newQuoteId);
-        if(quote.isPresent()){
-            return saveNewQuoteAndReturnQuote(quote.get());
-        }else {
-            quote = quoteRepository.findById(1L);
-            if(quote.isPresent()){
-                return saveNewQuoteAndReturnQuote(quote.get());
-            }
-            return "Baba is eternal";
-        }
-    }
-
-    public String saveNewQuoteAndReturnQuote(Quote newQuote) {
-            quoteRepository.insertQuoteIntoCurrentQuote(newQuote.getId(),newQuote.getQuote(),newQuote.getEmail());
-            return newQuote.getQuote();
+    public String readQuotesAndReturnQuote() throws IOException {
+        List<String> quotes = Files.readAllLines(Paths.get(quotesFilePath));
+        Random random = new Random();
+        int index = random.nextInt(quotes.size());
+        return quotes.get(index);
     }
 }

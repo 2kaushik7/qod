@@ -4,3 +4,6 @@ server:
     connection-timeout: 30
     threads:
       max: 20
+
+quotes:
+  filePath: src/main/resources/quotes.txt
